@@ -198,15 +198,14 @@ def train(train_labeled_loader, train_unlabeled_loader, valid_loader, epochs, n_
 
         learning_curve.append(all_losses)
 
-        if epoch % 1 == 0:
-            train_acc = classification_accuracy(Q, train_labeled_loader)
+        report_loss(
+            epoch+1,
+            all_losses,
+            descriptions=['D_loss_cat', 'D_loss_gauss', 'G_loss', 'recon_loss', 'class_loss'],
+            output_dir=output_dir)
+        
+        if epoch % 10 == 9:
             val_acc = classification_accuracy(Q, valid_loader)
-            report_loss(
-                epoch,
-                all_losses,
-                descriptions=['D_loss_cat', 'D_loss_gauss', 'G_loss', 'recon_loss', 'class_loss'],
-                output_dir=output_dir)
-            print('Train accuracy: {} %'.format(train_acc))
             print('Validation accuracy: {} %'.format(val_acc))
 
     return Q, P, learning_curve
