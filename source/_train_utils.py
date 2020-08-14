@@ -64,7 +64,7 @@ def classification_accuracy(Q, data_loader):
 
     for batch_idx, (X, target) in enumerate(data_loader):
 
-        X.resize_(data_loader.batch_size, Q.input_size)
+        #X.resize_(data_loader.batch_size, Q.input_size)
         X, target = Variable(X), Variable(target)
         if cuda:
             X, target = X.cuda(), target.cuda()
@@ -167,7 +167,7 @@ def report_loss(epoch, all_losses, descriptions, output_dir=None):
     '''
     Print loss.
     '''
-    base_loss_report = '\nEpoch-{}; '.format(epoch)
+    base_loss_report = 'Epoch-{}; '.format(epoch)
 
     for loss, desc in zip(all_losses, descriptions):
         base_loss_report += '{}: {:.4}; '.format(desc, loss.item())
