@@ -57,7 +57,7 @@ def _train_epoch(
                 latent_vec = torch.cat(Q(X_noisy), 1)
                 X_rec = P(latent_vec)
 
-                recon_loss = F.binary_cross_entropy(X_rec + epsilon, X + epsilon)
+                recon_loss = F.mse_loss(X_rec + epsilon, X + epsilon)
 
                 recon_loss.backward()
                 auto_encoder_optim.step()
