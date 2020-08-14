@@ -38,7 +38,7 @@ def _train_epoch(
             else:
                 labeled = True
 
-            X.resize_(batch_size, Q.input_size)
+            #X.resize_(batch_size, Q.input_size)
 
             X_noisy = add_noise(X)
 
