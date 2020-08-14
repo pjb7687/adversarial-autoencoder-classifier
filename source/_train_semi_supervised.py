@@ -152,14 +152,14 @@ def _get_optimizers(models, config_dict, decay=1.0):
     return optimizers
 
 
-def _get_models(n_classes, z_dim, config_dict):
+def _get_models(n_classes, n_features, z_dim, config_dict):
     '''
     Set and return all sub-modules that comprise the full model.
     '''
     model_params = config_dict['model']
 
-    Q = Q_net(z_size=z_dim, n_classes=n_classes, hidden_size=model_params['hidden_size'])
-    P = P_net(z_size=z_dim, n_classes=n_classes, hidden_size=model_params['hidden_size'])
+    Q = Q_net(z_size=z_dim, n_classes=n_classes, input_size=n_features, hidden_size=model_params['hidden_size'])
+    P = P_net(z_size=z_dim, n_classes=n_classes, input_size=n_features, hidden_size=model_params['hidden_size'])
     D_cat = D_net_cat(n_classes=n_classes, hidden_size=model_params['hidden_size'])
     D_gauss = D_net_gauss(z_size=z_dim, hidden_size=model_params['hidden_size'])
 
@@ -173,13 +173,13 @@ def _get_models(n_classes, z_dim, config_dict):
     return models
 
 
-def train(train_labeled_loader, train_unlabeled_loader, valid_loader, epochs, n_classes, z_dim, output_dir, config_dict):
+def train(train_labeled_loader, train_unlabeled_loader, valid_loader, epochs, n_classes, n_features, z_dim, output_dir, config_dict):
     '''
     Train the full model.
     '''
     learning_curve = []
 
-    models = _get_models(n_classes, z_dim, config_dict)
+    models = _get_models(n_classes, n_features, z_dim, config_dict)
     optimizers = _get_optimizers(models, config_dict)
     P, Q, D_cat, D_gauss = models
 
